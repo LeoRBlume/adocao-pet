@@ -1,0 +1,52 @@
+version: '3'
+
+networks:
+  local:
+
+services:
+  redis:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: cqrsdb                   # Nome do banco de dados
+      POSTGRES_USER: cqrsuser               # Usuário do banco de dados
+      POSTGRES_PASSWORD: cqrssecret         # Senha do banco de dados
+    ports:
+      - "5432:5432"                         # Mapeamento de porta
+    volumes:
+      - ./data/:/docker-entrypoint-initdb.d/       # Monta o diretório local 'data' como volume
+    depends_on:
+      - redis
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    user: root
+
+  grafana-forum-api:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    user: root
+#http://server-ip:9090
