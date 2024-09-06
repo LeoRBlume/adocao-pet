@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +22,18 @@ public class BreedController {
     private final BreedService breedService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(value = "breedLists", allEntries = true)
     public BreedDTO addBreed(@RequestBody @Validated BreedForm breedForm) {
-        logger.info("Received request to add a new breed with name: {}", breedForm.getName());
+        logger.warn("Received request to add a new breed with name: {}", breedForm.getName());
         return breedService.addBreed(breedForm);
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @Cacheable(value = "breedLists")
     public List<BreedDTO> listBreeds() {
-        logger.info("Log teste");
+        logger.info("Request received to list all breeds");
         return breedService.listBreeds();
     }
 }

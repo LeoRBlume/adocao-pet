@@ -34,6 +34,8 @@ public class BreedService {
 
 
     public List<BreedDTO> listBreeds() {
-        return null;
+        List<BreedEntity> breeds = breedRepository.findAll();
+
+        return breeds.stream().map(BreedDTO::of).toList();
     }
 }
