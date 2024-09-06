@@ -21,4 +21,10 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(new ErrorResponseDTO(ex.getMessage(), ex.getCause(), LocalDateTime.now()), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNotFoundException(NotFoundException ex) {
+        logger.error("Not Found Exception: {}", ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponseDTO(ex.getMessage(), null, LocalDateTime.now()), HttpStatus.NOT_FOUND);
+    }
+
 }
