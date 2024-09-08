@@ -5,6 +5,8 @@ import br.com.adocao_pet.infrastructure.persistence.entity.CustomerEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.ArrayList;
+
 @AllArgsConstructor
 @Getter
 public class CustomerForm {
@@ -20,6 +22,7 @@ public class CustomerForm {
         CustomerEntity customer = new CustomerEntity();
         customer.setName(this.name);
         customer.setAddress(address);
+        customer.setPets(new ArrayList<>());
         return customer;
     }
 }

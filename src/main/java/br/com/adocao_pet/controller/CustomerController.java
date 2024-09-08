@@ -13,8 +13,7 @@ import java.util.List;
 @RequestMapping("/customers")
 @RequiredArgsConstructor
 public class CustomerController {
-
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
