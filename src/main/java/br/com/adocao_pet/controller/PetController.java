@@ -4,6 +4,7 @@ import br.com.adocao_pet.infrastructure.forms.PetForm;
 import br.com.adocao_pet.infrastructure.records.PetRecord;
 import br.com.adocao_pet.infrastructure.service.PetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class PetController {
     private final PetService petService;
 
     @PostMapping
-    public PetRecord createPet(@RequestBody PetForm pet) {
+    public PetRecord createPet(@RequestBody @Validated PetForm pet) {
         return petService.savePet(pet);
     }
 

@@ -23,10 +23,10 @@ public class PetService {
     public PetRecord savePet(PetForm petForm) {
         logger.info("Received request to add a new pet with name: {}", petForm.getName());
 
-        BreedEntity breed = breedService.getBreedEntityById(petForm.getBreedId()); // Buscando a raça pelo ID
+        BreedEntity breed = breedService.getBreedEntityById(petForm.getBreedId());
 
-        PetEntity pet = petForm.toPet(breed); // Convertendo o Form para a entidade Pet
-        return PetRecord.of(petRepository.save(pet)); // Retornando o record diretamente
+        PetEntity pet = petForm.toPet(breed);
+        return PetRecord.of(petRepository.save(pet));
     }
 
     public PetRecord getPetById(Long id) {
