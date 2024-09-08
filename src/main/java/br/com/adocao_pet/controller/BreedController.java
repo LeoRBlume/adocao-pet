@@ -1,7 +1,7 @@
 package br.com.adocao_pet.controller;
 
-import br.com.adocao_pet.infrastructure.dtos.BreedDTO;
 import br.com.adocao_pet.infrastructure.forms.BreedForm;
+import br.com.adocao_pet.infrastructure.records.BreedRecord;
 import br.com.adocao_pet.infrastructure.service.BreedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,22 +23,22 @@ public class BreedController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @CacheEvict(value = "breedLists", allEntries = true)
-    public BreedDTO addBreed(@RequestBody @Validated BreedForm breedForm) {
-        return breedService.addBreed(breedForm);
+    public BreedRecord saveBreed(@RequestBody @Validated BreedForm breedForm) {
+        return breedService.saveBreed(breedForm);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BreedDTO findById(@PathVariable Long id) {
-        return breedService.findById(id);
+    public BreedRecord getBreedById(@PathVariable Long id) {
+        return breedService.getBreedById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Cacheable(value = "breedLists")
-    public List<BreedDTO> listAll(
+    public List<BreedRecord> getAllBreeds(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) LocalDate creationDate) {
-        return breedService.listBreeds(name, creationDate);
+        return breedService.getAllBreeds(name, creationDate);
     }
 }
