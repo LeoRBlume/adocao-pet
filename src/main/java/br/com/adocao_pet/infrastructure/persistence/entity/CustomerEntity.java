@@ -22,7 +22,4 @@ public class CustomerEntity {
 
     @Embedded
     private AddressEntity address;
-
-    @OneToMany
-    private List<PetEntity> pets;
 }

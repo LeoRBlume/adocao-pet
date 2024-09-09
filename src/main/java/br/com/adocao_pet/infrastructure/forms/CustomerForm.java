@@ -22,7 +22,6 @@ public class CustomerForm {
         CustomerEntity customer = new CustomerEntity();
         customer.setName(this.name);
         customer.setAddress(address);
-        customer.setPets(new ArrayList<>());
         return customer;
     }
 }
