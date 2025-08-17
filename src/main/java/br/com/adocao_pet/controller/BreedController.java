@@ -36,6 +36,7 @@ public class BreedController {
         return breedService.getBreedById(id);
     }
 
+    //Add tests
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get  all breeds", description = "Fetches the breeds.")
